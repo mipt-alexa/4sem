@@ -3,4 +3,4 @@ project(cpp_4sem)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(cpp_4sem sourse.cpp)
+add_executable(cpp_4sem sem1.cpp)
