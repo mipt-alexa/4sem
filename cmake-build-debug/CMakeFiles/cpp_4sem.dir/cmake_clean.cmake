@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/cpp_4sem.dir/main.cpp.obj"
+  "CMakeFiles/cpp_4sem.dir/sourse.cpp.obj"
   "cpp_4sem.exe"
   "cpp_4sem.exe.manifest"
   "cpp_4sem.lib"

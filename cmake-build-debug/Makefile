@@ -127,32 +127,32 @@ cpp_4sem\fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\cpp_4sem.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\cpp_4sem.dir\build
 .PHONY : cpp_4sem\fast
 
-main.obj: main.cpp.obj
+sourse.obj: sourse.cpp.obj
 
-.PHONY : main.obj
+.PHONY : sourse.obj
 
 # target to build an object file
-main.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\cpp_4sem.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\cpp_4sem.dir\main.cpp.obj
-.PHONY : main.cpp.obj
+sourse.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cpp_4sem.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\cpp_4sem.dir\sourse.cpp.obj
+.PHONY : sourse.cpp.obj
 
-main.i: main.cpp.i
+sourse.i: sourse.cpp.i
 
-.PHONY : main.i
+.PHONY : sourse.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\cpp_4sem.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\cpp_4sem.dir\main.cpp.i
-.PHONY : main.cpp.i
+sourse.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cpp_4sem.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\cpp_4sem.dir\sourse.cpp.i
+.PHONY : sourse.cpp.i
 
-main.s: main.cpp.s
+sourse.s: sourse.cpp.s
 
-.PHONY : main.s
+.PHONY : sourse.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\cpp_4sem.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\cpp_4sem.dir\main.cpp.s
-.PHONY : main.cpp.s
+sourse.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cpp_4sem.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\cpp_4sem.dir\sourse.cpp.s
+.PHONY : sourse.cpp.s
 
 # Help Target
 help:
@@ -163,9 +163,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... cpp_4sem
-	@echo ... main.obj
-	@echo ... main.i
-	@echo ... main.s
+	@echo ... sourse.obj
+	@echo ... sourse.i
+	@echo ... sourse.s
 .PHONY : help
 
 

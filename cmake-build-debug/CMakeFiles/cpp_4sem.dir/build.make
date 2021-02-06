@@ -61,33 +61,33 @@ include CMakeFiles\cpp_4sem.dir\progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles\cpp_4sem.dir\flags.make
 
-CMakeFiles\cpp_4sem.dir\main.cpp.obj: CMakeFiles\cpp_4sem.dir\flags.make
-CMakeFiles\cpp_4sem.dir\main.cpp.obj: ..\main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\User\cpp_4sem\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/cpp_4sem.dir/main.cpp.obj"
+CMakeFiles\cpp_4sem.dir\sourse.cpp.obj: CMakeFiles\cpp_4sem.dir\flags.make
+CMakeFiles\cpp_4sem.dir\sourse.cpp.obj: ..\sourse.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\User\cpp_4sem\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/cpp_4sem.dir/sourse.cpp.obj"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\cpp_4sem.dir\main.cpp.obj /FdCMakeFiles\cpp_4sem.dir\ /FS -c C:\Users\User\cpp_4sem\main.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\cpp_4sem.dir\sourse.cpp.obj /FdCMakeFiles\cpp_4sem.dir\ /FS -c C:\Users\User\cpp_4sem\sourse.cpp
 <<
 
-CMakeFiles\cpp_4sem.dir\main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cpp_4sem.dir/main.cpp.i"
-	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\cpp_4sem.dir\main.cpp.i @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\User\cpp_4sem\main.cpp
+CMakeFiles\cpp_4sem.dir\sourse.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cpp_4sem.dir/sourse.cpp.i"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\cpp_4sem.dir\sourse.cpp.i @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\User\cpp_4sem\sourse.cpp
 <<
 
-CMakeFiles\cpp_4sem.dir\main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cpp_4sem.dir/main.cpp.s"
+CMakeFiles\cpp_4sem.dir\sourse.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cpp_4sem.dir/sourse.cpp.s"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\cpp_4sem.dir\main.cpp.s /c C:\Users\User\cpp_4sem\main.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\cpp_4sem.dir\sourse.cpp.s /c C:\Users\User\cpp_4sem\sourse.cpp
 <<
 
 # Object files for target cpp_4sem
 cpp_4sem_OBJECTS = \
-"CMakeFiles\cpp_4sem.dir\main.cpp.obj"
+"CMakeFiles\cpp_4sem.dir\sourse.cpp.obj"
 
 # External object files for target cpp_4sem
 cpp_4sem_EXTERNAL_OBJECTS =
 
-cpp_4sem.exe: CMakeFiles\cpp_4sem.dir\main.cpp.obj
+cpp_4sem.exe: CMakeFiles\cpp_4sem.dir\sourse.cpp.obj
 cpp_4sem.exe: CMakeFiles\cpp_4sem.dir\build.make
 cpp_4sem.exe: CMakeFiles\cpp_4sem.dir\objects1.rsp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\User\cpp_4sem\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable cpp_4sem.exe"

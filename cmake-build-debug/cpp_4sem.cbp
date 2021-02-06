@@ -82,7 +82,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/User/cpp_4sem/main.cpp">
+		<Unit filename="C:/Users/User/cpp_4sem/sourse.cpp">
 			<Option target="cpp_4sem"/>
 		</Unit>
 		<Unit filename="C:/Users/User/cpp_4sem/CMakeLists.txt">
