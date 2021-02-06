@@ -21,6 +21,8 @@ private:
     timepoint_t  m_begin;
 };
 
+void my_function(){}
+
 int main(){
 
     // std::ratio <1, 3> r;
