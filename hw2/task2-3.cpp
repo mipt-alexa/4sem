@@ -27,6 +27,18 @@ void fill_multi_array(const Container & container, Forward_Iterator multi_array)
 	// USE: if constexpr (N > 1) { ... } else { ... }
 
 	// Enjoy debugging!
+	if constexpr (N > 1){
+        for (int j = 0; j < std::size(container); ++j) {
+            fill_multi_array< N - 1> (container[j], std::next(multi_array, j)->begin());
+        }
+
+	} else{
+         for (int i = 0; i < std::size(container); ++i) {
+            *std::next(multi_array, i) = container[i];
+        }
+	}
+
+
 }
 
 template < typename T, auto N, typename Container >
@@ -93,7 +105,6 @@ int main(int argc, char ** argv)
 		std::cout << std::endl;
 	}
 
-	system("pause");
 
-	return EXIT_SUCCESS;
+	return 0;
 }

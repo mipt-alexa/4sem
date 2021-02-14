@@ -8,4 +8,4 @@ include_directories (${Boost_INCLUDE_DIRS})
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(cpp_4sem hw2/task2-2.cpp)
+add_executable(cpp_4sem hw2/task2-3.cpp)
