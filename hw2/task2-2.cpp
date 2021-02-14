@@ -3,6 +3,7 @@
 #include <list>
 #include <forward_list>
 #include <deque>
+#include <algorithm>
 #include <chrono>
 #include <iostream>
 
@@ -48,8 +49,9 @@ int main(){
     std::forward_list<double> fl;
     std::deque<double> deq;
 
+    double val = 0;
     for (int i = 0; i < n; ++i) {
-        double val = i * (n - i);
+        val = i * (n - i);
         vec[i] = val;
         arr[i] = val;
         list.push_back(val);
