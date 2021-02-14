@@ -16,6 +16,8 @@ int main(int argc, char ** argv)
 
 	auto counter = 0;
 
+	int myArr[1][2];
+
 	for (auto i = 0U; i < size_1; ++i)
 	{
 		for (auto j = 0U; j < size_2; ++j)
