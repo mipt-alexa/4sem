@@ -51,7 +51,7 @@ int main(){
 
     double val = 0;
     for (int i = 0; i < n; ++i) {
-        val = i * (n - i);
+        val = i * (n - i) - 10*i;
         vec[i] = val;
         arr[i] = val;
         list.push_back(val);
@@ -97,11 +97,11 @@ int main(){
 
     // RESULTS  [milliseconds]:
     //
-    // list            22  23  23
-    // forward list    31  26  22
-    // vector          44  70  42
-    // array           64  65  63
-    // deque          317 349 355
+    // forward list    34
+    // list            35
+    // vector          37
+    // array           43
+    // deque          192
 
 
     return 0;
