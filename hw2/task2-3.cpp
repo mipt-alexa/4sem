@@ -34,7 +34,7 @@ void fill_multi_array(const Container & container, Forward_Iterator multi_array)
 
 	} else{
          for (int i = 0; i < std::size(container); ++i) {
-            *std::next(multi_array, i) = container[i];
+            *(multi_array++) = container[i];
         }
 	}
 
