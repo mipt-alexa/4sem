@@ -47,7 +47,7 @@ int main(int argc, char ** argv)
               std::setw(8) << std::right << "Number" <<
               std::setw(9) << std::right << "Postcode"<< std::endl;
 
-    for (auto i : book_multiset){
+    for (const auto & i : book_multiset){
         std::cout << std::setw(8) << std::left << i.name <<
         std::setw(8) << std::right << i.number <<
         std::setw(8) << std::right << i.postcode << std::endl;
