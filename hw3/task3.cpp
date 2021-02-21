@@ -9,7 +9,7 @@
 
 
 struct my_struct{
-    my_struct(const uint16_t a1, const double b1, std::string  c1) :
+    my_struct(const uint16_t a1, const float b1, std::string  c1) :
             a(a1), b(b1), c(std::move(c1))
     {}
 
