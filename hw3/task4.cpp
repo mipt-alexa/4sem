@@ -6,7 +6,7 @@
 #include <array>
 #include <vector>
 #include <fstream>
-
+#include <functional>
 
 unsigned int hash0(const char* str, unsigned int length)
 {
@@ -172,7 +172,7 @@ int main(){
         letters[i] = letters[i-1] + 1;
     }
 
-    unsigned int (*hash_p[9])(const char* str, unsigned int length); // array of function pointers
+    std::array<std::function<unsigned int(const char* str, unsigned int length)>, 9> hash_p;
 
     hash_p[0] = hash0;
     hash_p[1] = hash1;
