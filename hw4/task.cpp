@@ -86,7 +86,7 @@ int main(){
     nth_element(begin(v3), prev(end(v3), 3), end(v3));
 
     //17
-    sort(begin(v1), begin(v1));
+    sort(begin(v1), end(v1));
     sort(begin(v2), end(v2));
 
     //18
@@ -98,7 +98,8 @@ int main(){
     cout << *er.first << " " << *er.second;
 
     //20
-    copy(v1.cbegin(), v1.cend(),ostream_iterator < int > (cout, " "));
+    cout << "\n";
+    copy(v1.begin(), v1.end(),ostream_iterator < int > (cout, " "));
     cout << "\n";
     copy(v2.cbegin(), v2.cend(),ostream_iterator < int > (cout, " "));
     cout << "\n";
@@ -108,6 +109,22 @@ int main(){
     cout << "\n";
 
 
+
+    //21
+
+    v4.resize(100);
+    generate(begin(v4), end(v4), g);
+    v3.clear();
+    copy (begin(v4), end(v4), back_inserter(v3));
+
+    counter = 0;
+    sort(begin(v4), end(v4), [&counter](int x, int y) {counter++; return x < y;});
+    cout << "counts in sort: " << counter << "\n";
+
+    counter = 0;
+    nth_element(begin(v3), prev(end(v3), v3.size()/2), end(v3),
+                [&counter](int x, int y) {counter++; return x < y;});
+    cout << "counts in nth_element: " << counter << "\n";
 
     return 0;
 }
