@@ -41,7 +41,7 @@ int main(){
 
     //7
     int prime_counter = count_if(begin(v1), end(v1), [](int x) {
-        if (x == 1) return false;
+        if (x <= 1) return false;
         bool is_prime = true;
             for (int i = 2; i*i <= x; ++i) {
                     if (x % i == 0) {
