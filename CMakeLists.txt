@@ -16,5 +16,5 @@ project(cpp_4sem)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(cpp_4sem hw5/task3.cpp)
+add_executable(cpp_4sem hw5/1.cpp)
 
