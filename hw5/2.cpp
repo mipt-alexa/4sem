@@ -34,8 +34,6 @@ int main(){
     std::ifstream txt_file;
     txt_file.open("../hw5/romanized_cyrillic.txt");
 
-    txt_file.imbue(std::locale ("rus_rus.1251"));
-
     std::string buf_str;
 
     while(std::getline (txt_file, buf_str)){
