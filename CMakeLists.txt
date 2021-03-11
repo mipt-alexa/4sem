@@ -16,5 +16,5 @@ target_link_libraries(locale_target ${Boost_LIBRARIES})
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(cpp_4sem hw5/2.cpp)
+add_executable(cpp_4sem 6/sem.cpp)
 
