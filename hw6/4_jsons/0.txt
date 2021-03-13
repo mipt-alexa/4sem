@@ -1,0 +1,6 @@
+{
+    "f": 7.0,
+    "favourite_color": "45",
+    "id": 6,
+    "name": "4"
+}
