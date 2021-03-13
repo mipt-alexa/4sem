@@ -1,8 +1,9 @@
 #include <fstream>
 #include <string>
 #include <random>
-#include <sstream>
 #include <iostream>
+#include <cmath>
+
 
 int main(){
 
@@ -10,9 +11,16 @@ int main(){
 
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<unsigned int> dis(1000000,9999999);
 
-    for (int i = 0; i < 20; ++i) {
+    const int str_length = 7;
+    const int file_length = 20;
+
+    auto min = (unsigned int) pow(10, str_length - 1);
+     auto max = (unsigned int) (pow(10,str_length) - 1);
+
+    std::uniform_int_distribution<unsigned int> dis(min, max);
+
+    for (int i = 0; i < file_length; ++i) {
         file << dis(gen) << std::endl;
     }
 
@@ -21,10 +29,10 @@ int main(){
 
     std::string buffer;
 
-    if (n < 1 || n > 20){
+    if (n < 1 || n > file_length){
         std::cout << "string number out of range(";
     }else{
-        file.seekg((n-1)*9);
+        file.seekg((n-1) * (str_length + 2) );
         std::getline(file, buffer);
         std::cout << buffer;
     }
