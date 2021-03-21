@@ -1,0 +1,16 @@
+std::for_each
+
+parallel: 191 ms
+sequenced: 390 ms
+
+std::partial_sum
+808 ms
+
+std::inclusive_scan
+1058 ms
+
+std::transform_reduce
+235 ms
+
+std::inner_product
+974 ms
