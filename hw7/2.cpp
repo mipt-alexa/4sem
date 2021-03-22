@@ -70,6 +70,10 @@ int main()
     std::vector<unsigned int> sizes(20);
     std::iota(sizes.begin(), sizes.end(), 1);
 
+    sizes.push_back(100);
+    sizes.push_back(1000);
+    sizes.push_back(10000);
+
 
     for (unsigned int size : sizes) {
 
