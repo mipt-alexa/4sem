@@ -73,9 +73,11 @@ std::vector< std::size_t > parallel_find (std::string data, std::string pattern)
     std::vector< std::size_t> start(num_threads), finish(num_threads);
 
     for (int i = 0; i < num_threads; ++i) {
+
         start[i] = i*block_size;
         finish[i] = (i + 1)*block_size;
     }
+
     finish[num_threads - 1] = data.length();
 
     for (int i = 0; i < num_threads; ++i) {
@@ -83,8 +85,10 @@ std::vector< std::size_t > parallel_find (std::string data, std::string pattern)
         futures[i] = std::async(find_all_inclusions, std::ref(data), std::ref(pattern),
                                 start[i], finish[i], std::ref(pos));
 
-        futures[i].get();
+    }
 
+    for(auto & future : futures){
+        future.get();
     }
 
     return pos.m_vector;

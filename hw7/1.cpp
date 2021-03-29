@@ -43,6 +43,9 @@ void parallel_pi(const uint64_t size)
 
         future = std::async(calculate_block, block_size);
 
+    }
+
+    for(auto & future : futures){
         inner += future.get();
     }
 
