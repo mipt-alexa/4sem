@@ -200,12 +200,12 @@ int main(){
     const std::size_t n = std::thread::hardware_concurrency();
     const std::size_t m = 100000;
 
-    Stack_Test(n, m);
-    Stack_Test(2*n, m);
+    Stack_Test(n, 10);
+    Stack_Test(n, 5);
     Stack_Test(n, 2*m);
 
-    Queue_Test(n, m);
-    Queue_Test(2*n, m);
+    Queue_Test(n, 10);
+    Queue_Test(n, 5);
     Queue_Test(n, 10*m);
 
 

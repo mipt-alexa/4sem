@@ -1,4 +1,5 @@
 /cmake-build-debug/
-CMakeLists.txt
+cpp_4sem/CMakeLists.txt
 hw6/json.hpp
-hw7
+cpp_4sem/hw7
+/hw8/
