@@ -24,6 +24,20 @@ using vector_str = vector < str, vec_alloc >;
 
 void print(interprocess_mutex *mutex, interprocess_condition *cv, vector_str *v, bool& flag){
 
+
+    std::cout << v->size() << " messages in memory\n";
+
+    std::unique_lock lock1(*mutex);
+
+    for(auto & i : *v) {
+
+        std::cout << i.data() << "\n";
+    }
+
+    lock1.unlock();
+
+    std::cout << "print of message history finished \n";
+
     while(true){
 
         std::unique_lock lock2(*mutex);
