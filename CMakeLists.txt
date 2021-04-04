@@ -16,6 +16,8 @@ target_link_libraries(locale_target ${Boost_LIBRARIES})
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(cpp_4sem hw8/4.cpp)
-#add_executable(cpp_4sem hw8/test.cpp)
+add_executable(2 hw9/garbage_collector.cpp)
+add_executable(app hw9/app.cpp)
+add_executable(client hw9/client.cpp)
+add_executable(server hw9/server.cpp)
 
