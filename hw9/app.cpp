@@ -22,7 +22,7 @@ using vector_str = vector < str, vec_alloc >;
 
 
 
-void print(interprocess_mutex *mutex, interprocess_condition *cv, vector_str *v, bool& flag){
+void print(interprocess_mutex *mutex, interprocess_condition *cv, vector_str *v, bool& exit, int& my_last_message){
 
 
     std::cout << v->size() << " messages in memory\n";
@@ -44,14 +44,14 @@ void print(interprocess_mutex *mutex, interprocess_condition *cv, vector_str *v,
 
         cv->wait(lock2);
 
-        if (flag){
+        if (exit){
 
             std::cout << "shutting down printing...\n" ;  // so i can check if this thread has stopped
 
             break;
         }
 
-        if(!v->empty()) {
+        if(!v->empty() && v->size()-1 != my_last_message) {
             std::cout << v->back().data() << "\n";
         }
     }
@@ -59,7 +59,7 @@ void print(interprocess_mutex *mutex, interprocess_condition *cv, vector_str *v,
 }
 
 
-void read(interprocess_mutex *mutex, interprocess_condition *cv,  vector_str *v, str &str1, bool& flag){
+void read(interprocess_mutex *mutex, interprocess_condition *cv,  vector_str *v, str &str1, bool& exit, int& my_last_message){
 
     while (true) {
         std::string read;
@@ -70,7 +70,7 @@ void read(interprocess_mutex *mutex, interprocess_condition *cv,  vector_str *v,
 
             cv->notify_all();   // so printing thread could stop
 
-            flag = true;
+            exit = true;
 
             std::cout << "shutting down reading...\n";     // so i can check whether shutdown is emergency or not
             std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -85,6 +85,8 @@ void read(interprocess_mutex *mutex, interprocess_condition *cv,  vector_str *v,
         }
 
         v->push_back(str1);
+
+        my_last_message = (int) v->size()-1;
 
         cv->notify_all();
 
@@ -115,12 +117,13 @@ int main(){
 
 
     bool exit = false;
+    int my_message = -1;
 
-    std::thread printing = std::thread(print, mutex, cv, v, std::ref(exit));
+    std::thread printing = std::thread(print, mutex, cv, v, std::ref(exit), std::ref(my_message));
 
     printing.detach();
 
-    std::thread reading = std::thread(read, mutex, cv, v, std::ref(str1), std::ref(exit));
+    std::thread reading = std::thread(read, mutex, cv, v, std::ref(str1), std::ref(exit), std::ref(my_message));
 
     reading.join();
 
