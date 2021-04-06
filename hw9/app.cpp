@@ -100,8 +100,6 @@ int main(){
 
     const std::string mem_name = "shared memory";
 
-    shared_memory_object::remove(mem_name.c_str());
-
     system("pause");
 
     managed_shared_memory shared_mem(open_or_create, mem_name.c_str(), 50000U);
