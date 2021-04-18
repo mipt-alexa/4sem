@@ -129,6 +129,9 @@ public:
         if (m_y > H) m_y = 0;
         if (m_y < 0) m_y = H;
 
+        m_anim.update();
+
+
     }
 
 };
@@ -151,7 +154,12 @@ public:
         m_x += m_dx;
         m_y += m_dy;
 
-        if (m_x > W || m_x < 0 || m_y > H || m_y < 0) m_alive = false;
+        if (m_x > W || m_x < 0 || m_y > H || m_y < 0) {
+            m_alive = false;
+        }else {
+            m_anim.update();
+        }
+
     }
 
 };
@@ -230,6 +238,9 @@ public:
         if (m_x < 0) m_x = W;
         if (m_y > H) m_y = 0;
         if (m_y < 0) m_y = H;
+
+        m_anim.update();
+
     }
 
 };
@@ -239,7 +250,10 @@ class Explosion : public Entity {
 public:
     Explosion(Animation &a, float X, float Y, float Angle = 0, float radius = 0) : Entity(a, X, Y, Angle, radius) {}
 
-    void update(const float W, const float H) {}
+    void update(const float W, const float H) {
+        m_anim.update();
+
+    }
 };
 
 
@@ -256,7 +270,6 @@ void update(std::vector<std::shared_ptr<A> > &vec, sf::RenderWindow &app, float 
     for (int i = 0; i < vec.size(); i++) {
 
         vec[i]->update(W, H);
-        vec[i]->m_anim.update();
 
         if (!vec[i]->alive()) {
             vec.erase(vec.cbegin() + i);
@@ -326,7 +339,6 @@ public:
         app.draw(text);
 
         player->update(W, H);
-        player->m_anim.update();
 
         player->draw(app);
 
