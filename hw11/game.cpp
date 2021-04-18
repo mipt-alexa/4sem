@@ -7,10 +7,6 @@
 #include <vector>
 
 
-//// глобальные константы остались
-const float W = static_cast< float > (sf::VideoMode::getDesktopMode().width);
-const float H = static_cast< float > (sf::VideoMode::getDesktopMode().height);
-
 
 const float deg_to_rad = 0.017453f;
 
@@ -124,7 +120,7 @@ public:
 
     }
 
-    void update() {
+    void update(const float W, const float H) {
         m_x += m_dx;
         m_y += m_dy;
 
@@ -147,7 +143,7 @@ public:
         m_speed = 6;
     }
 
-    void update() {
+    void update(const float W, const float H) {
         m_dx = std::cos(m_angle * deg_to_rad) * m_speed;
         m_dy = std::sin(m_angle * deg_to_rad) * m_speed;
 
@@ -203,7 +199,7 @@ public:
         }
     }
 
-    void new_start() {
+    void new_start(const float W, const float H) {
         m_x = W / 2;
         m_y = H / 2;
 
@@ -212,7 +208,7 @@ public:
         m_lives--;
     }
 
-    void update() {
+    void update(const float W, const float H) {
         if (m_thrust) {
             m_dx += static_cast< float > (std::cos(m_angle * deg_to_rad) * 0.2);
             m_dy += static_cast< float > (std::sin(m_angle * deg_to_rad) * 0.2);
@@ -243,7 +239,7 @@ class Explosion : public Entity {
 public:
     Explosion(Animation &a, float X, float Y, float Angle = 0, float radius = 0) : Entity(a, X, Y, Angle, radius) {}
 
-    void update() {}
+    void update(const float W, const float H) {}
 };
 
 
@@ -256,10 +252,10 @@ bool collided(std::shared_ptr<A> a, std::shared_ptr<B> b) {
 
 
 template<class A>
-void update(std::vector<std::shared_ptr<A> > &vec, sf::RenderWindow &app) {
+void update(std::vector<std::shared_ptr<A> > &vec, sf::RenderWindow &app, float W, float H) {
     for (int i = 0; i < vec.size(); i++) {
 
-        vec[i]->update();
+        vec[i]->update(W, H);
         vec[i]->m_anim.update();
 
         if (!vec[i]->alive()) {
@@ -274,7 +270,10 @@ void update(std::vector<std::shared_ptr<A> > &vec, sf::RenderWindow &app) {
 
 class Game {
 
-protected:
+private:
+
+    const float W = static_cast< float > (sf::VideoMode::getDesktopMode().width);
+    const float H = static_cast< float > (sf::VideoMode::getDesktopMode().height);
 
     int counter_for_asteroids;
 
@@ -326,14 +325,14 @@ public:
         text.setString("Score: " + std::to_string(player->score()) + "\nLives: " + std::to_string(player->lives()));
         app.draw(text);
 
-        player->update();
+        player->update(W, H);
         player->m_anim.update();
 
         player->draw(app);
 
-        update(explosions, app);
-        update(bullets, app);
-        update(asteroids, app);
+        update(explosions, app, W, H);
+        update(bullets, app, W, H);
+        update(asteroids, app, W, H);
 
         app.display();
     }
@@ -445,7 +444,7 @@ public:
 
                     explosions.push_back(std::move(e2));
 
-                    player->new_start();
+                    player->new_start(W, H);
 
                 }
             }
