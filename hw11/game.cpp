@@ -4,7 +4,6 @@
 #include <random>
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include <iostream>
 
 
 const float deg_to_rad = 0.017453f;
