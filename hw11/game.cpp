@@ -337,9 +337,7 @@ private:
                     a->kill();
                     b->kill();
 
-                    std::shared_ptr<Explosion> e1(new Explosion(sExplosion, a->x(), a->y()));
-
-                    explosions.push_back(std::move(e1));
+                    explosions.emplace_back(new Explosion(sExplosion, a->x(), a->y()));
 
                     player->score_increase();
 
@@ -351,9 +349,7 @@ private:
 
                 a->kill();
 
-                std::shared_ptr<Explosion> e2(new Explosion(sExplosion_ship, player->x(), player->y()));
-
-                explosions.push_back(std::move(e2));
+                explosions.emplace_back(new Explosion(sExplosion_ship, player->x(), player->y()));
 
                 player->decrease_lives();
 
@@ -373,14 +369,15 @@ private:
     void process_events(){
         sf::Event event{};
         while (app.pollEvent(event)) {
+
             if (event.type == sf::Event::Closed)
                 app.close();
 
             if (event.type == sf::Event::KeyPressed)
                 if (event.key.code == sf::Keyboard::Space) {
-                    std::shared_ptr<Bullet> b(new Bullet(sBullet, player->x(), player->y(), player->angle(), 10));
 
-                    bullets.push_back(std::move(b));
+                    bullets.emplace_back(new Bullet(sBullet, player->x(), player->y(), player->angle(), 10));
+
                 }
         }
 
@@ -456,9 +453,9 @@ public:
 
 
         for (int i = 0; i < 5; i++) {
-            std::shared_ptr<Asteroid> a1(new Asteroid(sRock, rand_x(gen), rand_y(gen),
-                                                           rand_angle(gen), 25));
-            asteroids.push_back(std::move(a1));
+
+            asteroids.emplace_back(new Asteroid(sRock, rand_x(gen), rand_y(gen),
+                                                rand_angle(gen), 25));
 
         }
 
@@ -480,13 +477,11 @@ public:
 
                 if (new_asteroids_counter % 200 == 0) {
 
-                    std::shared_ptr<Asteroid> a1(new Asteroid(sRock, 0, rand_y(gen), rand_angle(gen), 25));
-                    asteroids.push_back(std::move(a1));
+                    asteroids.emplace_back(new Asteroid(sRock, 0, rand_y(gen), rand_angle(gen), 25));
 
                 }else{
 
-                    std::shared_ptr<Asteroid> a1(new Asteroid(sRock_small, 0, rand_y(gen), rand_angle(gen), 25));
-                    asteroids.push_back(std::move(a1));
+                    asteroids.emplace_back(new Asteroid(sRock_small, 0, rand_y(gen), rand_angle(gen), 25));
 
                 }
             }
