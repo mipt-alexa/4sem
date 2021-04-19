@@ -1,11 +1,10 @@
 #include <ctime>
 #include <cmath>
 #include <iostream>
-#include <list>
 #include <random>
 #include <SFML/Graphics.hpp>
 #include <vector>
-
+#include <iostream>
 
 
 const float deg_to_rad = 0.017453f;
@@ -42,7 +41,7 @@ public:
         }
 
         if (n > 0) {
-            m_sprite.setTextureRect(m_frames[static_cast<int> (m_frame)]);  // приведение плохое ???
+            m_sprite.setTextureRect(m_frames[static_cast<int> (m_frame)]);
         }
     }
 
@@ -198,6 +197,10 @@ public:
         m_score++;
     }
 
+    void decrease_lives(){
+        m_lives--;
+    }
+
     void turn(bool direction) {
 
         if (direction) {
@@ -213,8 +216,9 @@ public:
 
         m_dx = 0;
         m_dy = 0;
-        m_lives--;
+
     }
+
 
     void update(const float W, const float H) {
         if (m_thrust) {
@@ -281,14 +285,15 @@ void update(std::vector<std::shared_ptr<A> > &vec, sf::RenderWindow &app, float 
 }
 
 
+
 class Game {
 
-private:
+protected:
 
     const float W = static_cast< float > (sf::VideoMode::getDesktopMode().width);
     const float H = static_cast< float > (sf::VideoMode::getDesktopMode().height);
 
-    int counter_for_asteroids;
+    int new_asteroids_counter;
 
     std::vector<std::shared_ptr<Asteroid> > asteroids;
     std::vector<std::shared_ptr<Bullet> > bullets;
@@ -303,35 +308,10 @@ private:
 
     sf::RenderWindow app;
 
-    Animation sExplosion;
-
-public:
-
-    Game() : app(sf::VideoMode(static_cast< int >(W), static_cast< int >(H)), "Asteroids")
-
-    {
-        counter_for_asteroids = 0;
-
-        app.setFramerateLimit(60);
-
-        if (!font.loadFromFile("../hw11/Font/ITCBLKAD.ttf")) // +
-        {
-            std::cerr << "error...\n";
-        }
-
-        text.setFont(font); // +
-        text.setCharacterSize(40); // +
-        text.setFillColor(sf::Color::Red); // +
-
-        sf::Texture t3;
-
-        t3.loadFromFile("../hw11/images/explosions/type_C.png");
-
-        sExplosion = Animation(t3, 0, 0, 256, 256, 48, 0.5);
-
-    };
+    Animation& sExplosion, sRock, sRock_small, sBullet, sPlayer, sPlayer_go, sExplosion_ship;
 
 
+private:
     void draw(){
         app.draw(background);
 
@@ -349,33 +329,124 @@ public:
         app.display();
     }
 
+    void check_for_collisions(){
+        for (const auto &a : asteroids) {
 
+            for (const auto &b : bullets) {
+                if (collided(a, b)) { // a bullet destroys an asteroid
+
+                    a->kill();
+                    b->kill();
+
+                    std::shared_ptr<Explosion> e1(new Explosion(sExplosion, a->x(), a->y()));
+
+                    explosions.push_back(std::move(e1));
+
+                    player->score_increase();
+
+                }
+            }
+
+            //  an asteroid destroys the player
+            if (collided(a, player)) {
+
+                a->kill();
+
+                std::shared_ptr<Explosion> e2(new Explosion(sExplosion_ship, player->x(), player->y()));
+
+                explosions.push_back(std::move(e2));
+
+                player->decrease_lives();
+
+                if (player->lives() == 0){
+
+                    player->kill();
+
+                }else {
+                    player->new_start(W, H);
+                }
+
+            }
+        }
+
+    }
+
+    void process_events(){
+        sf::Event event{};
+        while (app.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                app.close();
+
+            if (event.type == sf::Event::KeyPressed)
+                if (event.key.code == sf::Keyboard::Space) {
+                    std::shared_ptr<Bullet> b(new Bullet(sBullet, player->x(), player->y(), player->angle(), 10));
+
+                    bullets.push_back(std::move(b));
+                }
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            player->turn(true);
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            player->turn(false);
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+
+            player->m_thrust = true;
+            player->m_anim = sPlayer_go;
+        } else {
+
+            player->m_thrust = false;
+            player->m_anim = sPlayer;
+        }
+    }
+
+    void finished_explosions(){
+        for (const auto &e : explosions) {
+
+            if (e->m_anim.finished()) {
+
+                e->kill();
+
+            }
+        }
+    }
+
+
+public:
+
+    Game(Animation& sExplosion, Animation&  sRock, Animation& sRock_small, Animation& sBullet, Animation&  sPlayer,
+         Animation& sPlayer_go, Animation& sExplosion_ship, sf::Sprite background) :
+
+    app(sf::VideoMode(static_cast< int >(W), static_cast< int >(H)), "Asteroids"),
+
+    sExplosion(sExplosion), sRock(sRock), sRock_small(sRock_small), sBullet(sBullet), sPlayer(sPlayer),
+    sPlayer_go(sPlayer_go), sExplosion_ship(sExplosion_ship),
+
+    background(std::move(background))
+
+    {
+        new_asteroids_counter = 0;
+
+        app.setFramerateLimit(60);
+
+        if (!font.loadFromFile("../hw11/Font/ITCBLKAD.ttf"))
+        {
+            std::cerr << "error...\n";
+        }
+
+        text.setFont(font);
+        text.setCharacterSize(40);
+        text.setFillColor(sf::Color::Red);
+
+    };
+
+
+public:
     void run() {
-
-        sf::Texture t1, t2, t3, t4, t5, t6, t7;
-
-        t1.loadFromFile("../hw11/images/spaceship.png");
-        t2.loadFromFile("../hw11/images/background.jpg");
-        t3.loadFromFile("../hw11/images/explosions/type_C.png");
-        t4.loadFromFile("../hw11/images/rock.png");
-        t5.loadFromFile("../hw11/images/fire_blue.png");
-        t6.loadFromFile("../hw11/images/rock_small.png");
-        t7.loadFromFile("../hw11/images/explosions/type_B.png");
-
-        t1.setSmooth(true);
-        t2.setSmooth(true);
-
-        background = sf::Sprite(t2);
-
-//        Animation  sExplosion (t3, 0, 0, 256, 256, 48, 0.5);
-
-    Animation sRock(t4, 0, 0, 64, 64, 16, 0.2);
-    Animation sRock_small(t6, 0, 0, 64, 64, 16, 0.2);
-    Animation sBullet(t5, 0, 0, 32, 64, 16, 0.8);
-    Animation sPlayer(t1, 40, 0, 40, 40, 1, 0);
-    Animation sPlayer_go(t1, 40, 40, 40, 40, 1, 0);
-    Animation sExplosion_ship(t7, 0, 0, 192, 192, 64, 0.5);
-
 
         std::random_device rd;
         std::mt19937 gen(rd());
@@ -386,101 +457,39 @@ public:
 
 
         for (int i = 0; i < 5; i++) {
-            std::shared_ptr<Asteroid> a1(new Asteroid(sRock, rand_x(gen), rand_y(gen), rand_angle(gen), 25));
+            std::shared_ptr<Asteroid> a1(new Asteroid(sRock, rand_x(gen), rand_y(gen),
+                                                           rand_angle(gen), 25));
             asteroids.push_back(std::move(a1));
 
         }
 
         player = std::make_shared< Player > ( sPlayer, W / 2, H / 2, 0, 20);
 
+
         /////main loop/////
         while (app.isOpen() && player->alive()) {
-            sf::Event event{};
-            while (app.pollEvent(event)) {
-                if (event.type == sf::Event::Closed)
-                    app.close();
 
-                if (event.type == sf::Event::KeyPressed)
-                    if (event.key.code == sf::Keyboard::Space) {
-                        std::shared_ptr<Bullet> b(new Bullet(sBullet, player->x(), player->y(), player->angle(), 10));
+            process_events();
 
-                        bullets.push_back(std::move(b));
-                    }
-            }
+            check_for_collisions();
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-                player->turn(true);
-            }
+            finished_explosions();
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-                player->turn(false);
-            }
+            new_asteroids_counter++;
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+            if (new_asteroids_counter % 100 == 0) {
 
-                player->m_thrust = true;
-                player->m_anim = sPlayer_go;
-            } else {
+                if (new_asteroids_counter % 200 == 0) {
 
-                player->m_thrust = false;
-                player->m_anim = sPlayer;
-            }
+                    std::shared_ptr<Asteroid> a1(new Asteroid(sRock, 0, rand_y(gen), rand_angle(gen), 25));
+                    asteroids.push_back(std::move(a1));
 
+                }else{
 
-            // collisions
-            for (const auto &a : asteroids) {
-
-                for (const auto &b : bullets) {  // a bullet destroys an asteroid
-                    if (collided(a, b)) {
-
-                        a->kill();
-                        b->kill();
-
-                        std::shared_ptr<Explosion> e1(new Explosion(sExplosion, a->x(), a->y()));
-
-                        explosions.push_back(std::move(e1));
-
-                        player->score_increase();
-
-                    }
-                }
-
-                //  an asteroid destroys the player
-                if (collided(a, player)) {
-
-                    a->kill();
-
-//                    a->m_alive = false;
-
-                    std::shared_ptr<Explosion> e2(new Explosion(sExplosion_ship, player->x(), player->y()));
-
-                    explosions.push_back(std::move(e2));
-
-                    player->new_start(W, H);
+                    std::shared_ptr<Asteroid> a1(new Asteroid(sRock_small, 0, rand_y(gen), rand_angle(gen), 25));
+                    asteroids.push_back(std::move(a1));
 
                 }
-            }
-
-
-            for (const auto &e : explosions) {
-
-                if (e->m_anim.finished()) {
-
-                    e->kill();
-
-                }
-            }
-
-            counter_for_asteroids++;
-
-            if (counter_for_asteroids % 100 == 0) {
-                std::shared_ptr<Asteroid> a1(new Asteroid(sRock, 0, rand_y(gen), rand_angle(gen), 25));
-                asteroids.push_back(std::move(a1));
-            }
-
-
-            if (player->lives() == 0){
-                player->kill();
             }
 
             draw();
@@ -490,12 +499,42 @@ public:
 };
 
 
+void start_game(){
+
+    sf::Texture t1, t2, t3, t4, t5, t6, t7;
+
+    t1.loadFromFile("../hw11/images/spaceship.png");
+    t2.loadFromFile("../hw11/images/background.jpg");
+    t3.loadFromFile("../hw11/images/explosions/type_C.png");
+    t4.loadFromFile("../hw11/images/rock.png");
+    t5.loadFromFile("../hw11/images/fire_blue.png");
+    t6.loadFromFile("../hw11/images/rock_small.png");
+    t7.loadFromFile("../hw11/images/explosions/type_B.png");
+
+    t1.setSmooth(true);
+    t2.setSmooth(true);
+
+    Animation  sExplosion (t3, 0, 0, 256, 256, 48, 0.5);
+    Animation sRock(t4, 0, 0, 64, 64, 16, 0.2);
+    Animation sRock_small(t6, 0, 0, 64, 64, 16, 0.2);
+    Animation sBullet(t5, 0, 0, 32, 64, 16, 0.8);
+    Animation sPlayer(t1, 40, 0, 40, 40, 1, 0);
+    Animation sPlayer_go(t1, 40, 40, 40, 40, 1, 0);
+    Animation sExplosion_ship(t7, 0, 0, 192, 192, 64, 0.5);
+
+    sf::Sprite background(t2);
+
+    Game a(sExplosion, sRock, sRock_small, sBullet, sPlayer, sPlayer_go, sExplosion_ship,
+           background);
+
+    a.run();
+
+}
+
 
 int main() {
 
-    Game a;
-
-    a.run();
+    start_game();
 
     return 0;
 }
