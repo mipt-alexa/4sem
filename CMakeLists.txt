@@ -23,10 +23,12 @@ set(CMAKE_MODULE_PATH "${SFML_DIR}/cmake/Modules" ${CMAKE_MODULE_PATH})
 find_package(SFML 2.5.1 COMPONENTS system window graphics audio network REQUIRED)
 include_directories(C:/SFML-2.5.1/include)
 
-add_executable(game hw12/particles/main.cpp hw12/particles/particle.cpp hw12/particles/link.cpp  hw12/particles/system.cpp )
+add_executable(game hw12/crystal/main.cpp hw12/crystal/particle.cpp hw12/crystal/link.cpp hw12/crystal/system.cpp)
 add_executable(math hw12/julia/calculator.cpp hw12/julia/main.cpp hw12/julia/visualizer.cpp)
+add_executable(brown hw12/brownian_motion/main.cpp hw12/brownian_motion/particle.cpp hw12/brownian_motion/system.cpp)
 
 target_link_libraries (game sfml-graphics sfml-window sfml-system)
 target_link_libraries (math sfml-graphics sfml-window sfml-system)
+target_link_libraries (brown sfml-graphics sfml-window sfml-system)
 
 add_executable(SFMLTest main.cpp)

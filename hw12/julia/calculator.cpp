@@ -36,8 +36,8 @@ void Calculator::calculate(sf::Vector2f center, float width, float height)
 				std::complex < float > z(center.x - width  / 2.0f + dx * x,
                              center.y - height / 2.0f + dy * y);
 				std::complex < float > c(
-					-0.8,
-					0.16
+					-0.801,
+					0.161
 				);
 
 				auto iteration = 0U;
